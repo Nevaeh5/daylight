@@ -1,106 +1,106 @@
-/* Warm pixel cottage: crisp frames, paper, amber light. */
+/* Rose pixel cottage: original sprites, game menus, and strawberry milk colors. */
 :root {
-  color: #604936;
-  background: #f5ead3;
-  --line: #e3cba5;
-  --green: #a87540;
-  --muted: #9b7e5f;
-  --cream: #fff8e7;
-  --accent: #d39849;
+  color: hsl(333 23% 34%);
+  background: hsl(343 62% 97%);
+  --line: hsl(343 57% 89%);
+  --green: hsl(343 40% 69%);
+  --muted: hsl(343 40% 69%);
+  --cream: hsl(343 62% 97%);
+  --accent: hsl(343 48% 81%);
 }
 body {
-  background-color: #f5ead3;
+  background-color: hsl(343 62% 97%);
   background-image:
-    linear-gradient(#b58b4d08 1px, transparent 1px),
-    linear-gradient(90deg, #b58b4d08 1px, transparent 1px);
+    linear-gradient(hsl(343 40% 69% / 0.031) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(343 40% 69% / 0.031) 1px, transparent 1px);
   background-size: 12px 12px;
 }
 .sidebar {
-  background: #eddbb9;
-  border-color: #d6b98e;
+  background: hsl(343 66% 94%);
+  border-color: hsl(343 57% 89%);
 }
 .brand {
-  color: #7b5531;
+  color: hsl(343 32% 52%);
   letter-spacing: -1px;
 }
 .brand-sun,
 .brand-dot {
-  color: #c28a36;
+  color: hsl(343 40% 69%);
 }
 .sidebar-caption,
 .sidebar-bottom p,
 .sidebar-bottom small {
-  color: #8b7153;
+  color: hsl(343 32% 52%);
 }
 .nav-item {
-  color: #9b7c57;
+  color: hsl(343 40% 69%);
   border: 2px solid transparent;
   border-radius: 0;
 }
 .nav-item.active {
-  background: #f8e6bc;
-  border-color: #c5a171;
-  color: #805930;
-  box-shadow: 3px 3px 0 #cbb18c;
+  background: hsl(343 66% 94%);
+  border-color: hsl(343 48% 81%);
+  color: hsl(343 32% 52%);
+  box-shadow: 3px 3px 0 hsl(343 48% 81%);
 }
 .nav-item:hover {
-  background: #f4dfb4;
+  background: hsl(343 66% 94%);
 }
 .nav-dot {
-  background: #b78743;
-  box-shadow: 3px 0 #b78743;
+  background: hsl(343 40% 69%);
+  box-shadow: 3px 0 hsl(343 40% 69%);
 }
 .tiny-plant {
-  color: #a18955;
+  color: hsl(343 40% 69%);
 }
 .local-status {
-  color: #8b6e44;
+  color: hsl(343 32% 52%);
 }
 .local-status i,
 .status-dot {
-  background: #c49a49;
+  background: hsl(343 48% 81%);
 }
 .topbar {
-  background: #fff8e766;
-  border-color: #e0cba8;
+  background: hsl(343 62% 97% / 0.4);
+  border-color: hsl(343 57% 89%);
 }
 .topbar-right,
 .breadcrumb {
-  color: #9b805c;
+  color: hsl(343 40% 69%);
 }
 .avatar {
-  background: #edcc91;
-  border: 2px solid #c6a16e;
+  background: hsl(343 57% 89%);
+  border: 2px solid hsl(343 48% 81%);
   border-radius: 0;
-  color: #8c623a;
+  color: hsl(343 32% 52%);
 }
 .eyebrow {
-  color: #a1845d;
+  color: hsl(343 40% 69%);
   font-family: monospace;
 }
 .heading-sun {
-  color: #cd9648;
+  color: hsl(343 48% 81%);
 }
 h1 {
-  color: #715131;
-  text-shadow: 1px 1px 0 #fff8dc;
+  color: hsl(333 23% 34%);
+  text-shadow: 1px 1px 0 hsl(343 62% 97%);
   font-family: monospace, "Microsoft YaHei", sans-serif;
 }
 h2 {
-  color: #795a38;
+  color: hsl(343 32% 52%);
 }
 .panel,
 .room,
 .quick-add {
-  border: 2px solid #d1b284;
+  border: 2px solid hsl(343 48% 81%);
   border-radius: 2px;
-  box-shadow: 4px 4px 0 #ddc49a;
-  background: #fff9e9;
+  box-shadow: 4px 4px 0 hsl(343 57% 89%);
+  background: hsl(343 62% 97%);
 }
 .room {
-  background: #f4dfb9;
-  border-color: #bc9461;
-  box-shadow: 4px 4px 0 #d1b281;
+  background: hsl(343 66% 94%);
+  border-color: hsl(343 40% 69%);
+  box-shadow: 4px 4px 0 hsl(343 48% 81%);
 }
 .room:before {
   content: "▣ DAYLIGHT COTTAGE";
@@ -110,39 +110,39 @@ h2 {
   z-index: 2;
   font: 8px monospace;
   letter-spacing: 1px;
-  color: #a17a49;
+  color: hsl(343 40% 69%);
   padding: 5px 12px;
-  border-bottom: 2px solid #d7b680;
-  background: #fbe9c4;
+  border-bottom: 2px solid hsl(343 48% 81%);
+  background: hsl(343 66% 94%);
 }
 .room-caption {
   top: 36px;
 }
 .room-caption h2 {
-  color: #8a5f32;
+  color: hsl(343 32% 52%);
 }
 .room-caption p {
-  color: #967444;
+  color: hsl(343 32% 52%);
 }
 .room-badge {
-  background: #fff4d7;
-  border: 1px solid #d3ae76;
-  color: #98723d;
+  background: hsl(343 62% 97%);
+  border: 1px solid hsl(343 48% 81%);
+  color: hsl(343 32% 52%);
   border-radius: 0;
 }
 .room-label {
-  color: #ad8c5c;
+  color: hsl(343 40% 69%);
 }
 .pet-bubble {
-  border: 2px solid #ba905d;
-  box-shadow: 3px 3px 0 #c99d6044;
-  color: #8d6236;
-  background: #fffae9;
+  border: 2px solid hsl(343 40% 69%);
+  box-shadow: 3px 3px 0 hsl(343 48% 81% / 0.267);
+  color: hsl(343 32% 52%);
+  background: hsl(343 62% 97%);
   font-size: 10px;
 }
 .pet-bubble:after {
-  background: #fffae9;
-  border-color: #ba905d;
+  background: hsl(343 62% 97%);
+  border-color: hsl(343 40% 69%);
 }
 .pet-happy .pixel-dog {
   animation: hop 0.4s steps(3) 3;
@@ -152,9 +152,9 @@ h2 {
   align-items: center;
   gap: 20px;
   padding: 18px 20px;
-  background: #f9ebc9;
-  border: 2px solid #c9a672;
-  box-shadow: 4px 4px 0 #ddc49a;
+  background: hsl(343 62% 97%);
+  border: 2px solid hsl(343 48% 81%);
+  box-shadow: 4px 4px 0 hsl(343 57% 89%);
   margin-top: 13px;
   position: relative;
 }
@@ -162,13 +162,13 @@ h2 {
   content: "";
   width: 7px;
   height: 7px;
-  background: #dcab5c;
+  background: hsl(343 48% 81%);
   position: absolute;
   left: -4px;
   top: -4px;
   box-shadow:
-    0 2px #f9ebc9,
-    2px 0 #f9ebc9;
+    0 2px hsl(343 62% 97%),
+    2px 0 hsl(343 62% 97%);
 }
 .pet-dialogue {
   flex: 1;
@@ -176,19 +176,19 @@ h2 {
 }
 .pet-name {
   font-size: 10px;
-  color: #b18040;
+  color: hsl(343 40% 69%);
   letter-spacing: 1px;
 }
 .pet-dialogue p {
   font-size: 14px;
-  color: #805b34;
+  color: hsl(343 32% 52%);
   line-height: 1.8;
   margin-top: 6px;
 }
 .pet-dialogue small {
   display: block;
   font-size: 11px;
-  color: #9c794e;
+  color: hsl(343 40% 69%);
   margin-top: 5px;
 }
 .pet-actions {
@@ -198,219 +198,219 @@ h2 {
   flex-shrink: 0;
 }
 .pet-actions button {
-  border: 1px solid #c9a672;
-  background: #fff6dd;
-  box-shadow: 2px 2px 0 #d2b785;
+  border: 1px solid hsl(343 48% 81%);
+  background: hsl(343 62% 97%);
+  box-shadow: 2px 2px 0 hsl(343 48% 81%);
   padding: 9px 8px;
   font-size: 11px;
-  color: #8c693a;
+  color: hsl(343 32% 52%);
   white-space: nowrap;
 }
 .pet-actions button:hover {
-  background: #f3d491;
+  background: hsl(343 66% 94%);
   transform: translateY(-2px);
 }
 .pet-actions span {
   grid-column: 1/-1;
   text-align: right;
   font: 9px monospace;
-  color: #ae8c58;
+  color: hsl(343 40% 69%);
   margin-top: 4px;
 }
 .daily-summary {
-  color: #a58351;
+  color: hsl(343 40% 69%);
 }
 .daily-summary b {
-  color: #936a32;
+  color: hsl(343 32% 52%);
 }
 .progress-track {
-  background: #e5d6b2;
+  background: hsl(343 66% 94%);
   border-radius: 0;
 }
 .progress-track div {
-  background: #d3a357;
+  background: hsl(343 48% 81%);
 }
 .summary-note {
-  color: #a88c66;
+  color: hsl(343 40% 69%);
 }
 .section-icon {
-  background: #f8e7bf;
-  color: #b58035;
+  background: hsl(343 66% 94%);
+  color: hsl(343 40% 69%);
   border-radius: 0;
 }
 .section-icon.green {
-  background: #eee3be;
-  color: #a29157;
+  background: hsl(343 66% 94%);
+  color: hsl(343 40% 69%);
 }
 .pill {
-  background: #f1dfb7;
-  color: #9c7c46;
+  background: hsl(343 66% 94%);
+  color: hsl(343 40% 69%);
 }
 .pill.neutral {
-  background: #f0e7d1;
-  color: #9f8964;
+  background: hsl(343 66% 94%);
+  color: hsl(343 40% 69%);
 }
 .count {
-  color: #ae8243;
+  color: hsl(343 40% 69%);
 }
 .count span {
-  color: #b7a080;
+  color: hsl(343 48% 81%);
 }
 .section-description,
 .panel-foot,
 .task-meta,
 .page-heading p,
 .quick-input span {
-  color: #9a7b55;
+  color: hsl(343 40% 69%);
 }
 .task-title {
-  color: #725637;
+  color: hsl(343 32% 52%);
 }
 .task-row {
-  background: #fff8e6;
-  border: 1px solid #e3cc9d;
+  background: hsl(343 62% 97%);
+  border: 1px solid hsl(343 57% 89%);
   border-radius: 0;
 }
 .is-done .task-title {
-  color: #ae987b;
+  color: hsl(343 40% 69%);
 }
 .check-box {
-  background: #fffdf2;
-  border: 2px solid #cbb38b;
+  background: hsl(343 62% 97%);
+  border: 2px solid hsl(343 48% 81%);
   border-radius: 0;
-  color: #9c7647;
+  color: hsl(343 40% 69%);
 }
 .is-done .check-box {
-  background: #bca26b;
-  border-color: #a9905d;
+  background: hsl(343 48% 81%);
+  border-color: hsl(343 40% 69%);
 }
 .empty-focus {
-  background: #fcf3de;
-  border: 1px dashed #ceb48a;
+  background: hsl(343 62% 97%);
+  border: 1px dashed hsl(343 48% 81%);
   border-radius: 0;
-  color: #9b7e54;
+  color: hsl(343 40% 69%);
 }
 .empty-focus:hover {
-  background: #f8e9c8;
-  border-color: #b48d55;
+  background: hsl(343 66% 94%);
+  border-color: hsl(343 40% 69%);
 }
 .empty-number {
-  color: #c7ab7b;
+  color: hsl(343 48% 81%);
 }
 .empty-focus svg {
-  color: #b2925e;
+  color: hsl(343 40% 69%);
 }
 .panel-foot {
-  border-color: #ead9b8;
+  border-color: hsl(343 66% 94%);
 }
 .timeline-item .task-row {
-  background: #fbf0d7;
-  border-color: #cfaa70;
+  background: hsl(343 62% 97%);
+  border-color: hsl(343 48% 81%);
 }
 .timeline-time,
 .icon-button {
-  color: #a88a60;
+  color: hsl(343 40% 69%);
 }
 .icon-button:hover {
-  background: #efe0bb;
-  color: #8f6534;
+  background: hsl(343 66% 94%);
+  color: hsl(343 32% 52%);
 }
 .timeline-empty h3,
 .timeline-empty p {
-  color: #9d825a;
+  color: hsl(343 40% 69%);
 }
 .empty-clock {
-  background: #f6ebcf;
-  color: #bca070;
+  background: hsl(343 62% 97%);
+  color: hsl(343 48% 81%);
   border-radius: 0;
 }
 .text-button {
-  color: #a6783a;
+  color: hsl(343 40% 69%);
 }
 .date-control {
-  background: #f8edcf;
-  border: 1px solid #d8bb87;
+  background: hsl(343 62% 97%);
+  border: 1px solid hsl(343 57% 89%);
   border-radius: 0;
 }
 .date-picker,
 .date-picker input {
-  color: #9f7d4c;
+  color: hsl(343 40% 69%);
 }
 .quick-add {
-  background: #fff8e6;
+  background: hsl(343 62% 97%);
 }
 .input-spark {
   border-radius: 0;
-  background: #f4e0b4;
-  color: #b48b4d;
+  background: hsl(343 66% 94%);
+  color: hsl(343 40% 69%);
 }
 .quick-input input,
 .quick-input input::placeholder {
-  color: #a38351;
+  color: hsl(343 40% 69%);
 }
 .primary {
-  background: #c18c4d;
-  border: 2px solid #9f6b34;
-  box-shadow: 3px 3px 0 #ddbb83;
-  color: #fffae8;
+  background: hsl(343 40% 69%);
+  border: 2px solid hsl(343 32% 52%);
+  box-shadow: 3px 3px 0 hsl(343 57% 89%);
+  color: hsl(343 62% 97%);
   border-radius: 0;
 }
 .primary:hover {
-  background: #ac793e;
+  background: hsl(343 40% 69%);
 }
 .secondary {
-  border: 1px solid #c9aa77;
-  background: #fff6df;
+  border: 1px solid hsl(343 48% 81%);
+  background: hsl(343 62% 97%);
   border-radius: 0;
-  color: #94703f;
+  color: hsl(343 32% 52%);
 }
 .bottom-note {
-  color: #b69b74;
+  color: hsl(343 48% 81%);
 }
 .settings p {
-  color: #95774f;
+  color: hsl(343 40% 69%);
 }
 .settings .subtle {
-  color: #a38a67;
+  color: hsl(343 40% 69%);
 }
 .settings b,
 .roadmap b {
-  color: #a4793f;
+  color: hsl(343 40% 69%);
 }
 .toast {
-  background: #916837;
-  border: 2px solid #e2be7c;
-  box-shadow: 4px 4px 0 #7b593b33;
+  background: hsl(343 32% 52%);
+  border: 2px solid hsl(343 57% 89%);
+  box-shadow: 4px 4px 0 hsl(343 32% 52% / 0.2);
   border-radius: 0;
 }
 .error {
-  background: #fff0d1;
-  border: 2px solid #c99b60;
-  color: #936231;
+  background: hsl(343 62% 97%);
+  border: 2px solid hsl(343 48% 81%);
+  color: hsl(343 32% 52%);
 }
 dialog {
-  background: #fff8e5;
-  border: 3px solid #bc935e;
+  background: hsl(343 62% 97%);
+  border: 3px solid hsl(343 40% 69%);
   border-radius: 0;
-  box-shadow: 7px 7px 0 #8e633f44;
-  color: #80603a;
+  box-shadow: 7px 7px 0 hsl(343 32% 52% / 0.267);
+  color: hsl(343 32% 52%);
 }
 dialog::backdrop {
-  background: #63452b66;
+  background: hsl(333 23% 34% / 0.4);
 }
 dialog label {
-  color: #947142;
+  color: hsl(343 32% 52%);
 }
 dialog input:not([type="checkbox"]),
 dialog textarea,
 dialog select {
-  background: #fffbee;
-  border: 1px solid #d6b98c;
-  color: #7d5e3b;
+  background: hsl(343 62% 97%);
+  border: 1px solid hsl(343 57% 89%);
+  color: hsl(343 32% 52%);
   border-radius: 0;
 }
 .checkbox-label input {
-  accent-color: #b48848;
+  accent-color: hsl(343 40% 69%);
 }
 .month-calendar {
   padding: 20px;
@@ -438,59 +438,59 @@ dialog select {
 .month-weekdays {
   text-align: center;
   font-size: 12px;
-  color: #a08255;
+  color: hsl(343 40% 69%);
   padding-bottom: 12px;
 }
 .month-grid {
-  border-top: 1px solid #e2cba4;
-  border-left: 1px solid #e2cba4;
+  border-top: 1px solid hsl(343 57% 89%);
+  border-left: 1px solid hsl(343 57% 89%);
 }
 .month-cell {
   min-height: 112px;
-  border-right: 1px solid #e2cba4;
-  border-bottom: 1px solid #e2cba4;
+  border-right: 1px solid hsl(343 57% 89%);
+  border-bottom: 1px solid hsl(343 57% 89%);
   text-align: left;
   padding: 9px 7px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: #fffaec;
+  background: hsl(343 62% 97%);
   overflow: hidden;
   min-width: 0;
 }
 .month-cell:hover {
-  background: #f8e9c9;
+  background: hsl(343 66% 94%);
 }
 .month-cell.other-month {
-  background: #f5eddd;
-  color: #c0ac8c;
+  background: hsl(343 62% 97%);
+  color: hsl(343 48% 81%);
 }
 .month-cell.other-month .day-events {
   opacity: 0.65;
 }
 .month-cell.selected {
-  background: #f7dfaa;
-  box-shadow: inset 0 0 0 2px #c18c4d;
+  background: hsl(343 66% 94%);
+  box-shadow: inset 0 0 0 2px hsl(343 40% 69%);
 }
 .day-number {
   font: 13px monospace;
   display: flex;
   gap: 3px;
   align-items: center;
-  color: #8f7049;
+  color: hsl(343 32% 52%);
 }
 .other-month .day-number {
-  color: #bca788;
+  color: hsl(343 48% 81%);
 }
 .day-star {
-  color: #c08736;
+  color: hsl(343 40% 69%);
   font-size: 10px;
   margin-left: auto;
 }
 .is-today .day-number {
   font-weight: 700;
   text-decoration: underline;
-  text-decoration-color: #c08a45;
+  text-decoration-color: hsl(343 40% 69%);
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
@@ -504,16 +504,16 @@ dialog select {
 .day-events > span {
   font-size: 10px;
   line-height: 1.7;
-  background: #ede7cf;
-  color: #8c7757;
+  background: hsl(343 66% 94%);
+  color: hsl(343 32% 52%);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 3px;
 }
 .day-events > span.focus-event {
-  background: #efd298;
-  color: #9b6b28;
+  background: hsl(343 66% 94%);
+  color: hsl(343 32% 52%);
 }
 .day-events > span.event-done {
   text-decoration: line-through;
@@ -521,11 +521,11 @@ dialog select {
 }
 .day-events > span.more-events {
   background: none;
-  color: #b08c56;
+  color: hsl(343 40% 69%);
 }
 .calendar-legend {
   font-size: 11px;
-  color: #a3885d;
+  color: hsl(343 40% 69%);
   margin-top: 15px;
   line-height: 1.9;
 }
@@ -533,21 +533,21 @@ dialog select {
   font-size: 12px;
   letter-spacing: 1px;
   font-weight: 500;
-  color: #b28a4c;
+  color: hsl(343 40% 69%);
   margin: 22px 0 6px;
 }
 .agenda-empty {
   font-size: 12px;
-  color: #b5a080;
+  color: hsl(343 48% 81%);
   padding: 14px 0;
 }
 .journal-scene {
   position: relative;
-  background: #665349;
-  border: 3px solid #b58d60;
-  box-shadow: 4px 4px 0 #d2b389;
+  background: hsl(333 23% 34%);
+  border: 3px solid hsl(343 40% 69%);
+  box-shadow: 4px 4px 0 hsl(343 48% 81%);
   padding: 39px 130px 35px 40px;
-  color: #f4e3ba;
+  color: hsl(343 66% 94%);
   overflow: hidden;
   min-height: 175px;
 }
@@ -556,25 +556,25 @@ dialog select {
   z-index: 1;
 }
 .journal-scene h2 {
-  color: #f8e5b8;
+  color: hsl(343 66% 94%);
   font-size: 19px;
   line-height: 1.8;
   max-width: 430px;
 }
 .journal-scene p {
   font-size: 12px;
-  color: #d7bd96;
+  color: hsl(343 57% 89%);
   margin-top: 9px;
 }
 .journal-scene .eyebrow {
-  color: #d5ae71;
+  color: hsl(343 48% 81%);
 }
 .pixel-moon {
   position: absolute;
   top: -8px;
   right: 60px;
   font-size: 100px;
-  color: #efd196;
+  color: hsl(343 57% 89%);
   opacity: 0.2;
 }
 .journal-stars {
@@ -582,22 +582,22 @@ dialog select {
   top: 17px;
   right: 15px;
   font-size: 14px;
-  color: #d8bd86;
+  color: hsl(343 57% 89%);
 }
 .pixel-lamp {
   position: absolute;
   bottom: 13px;
   right: 105px;
   font: 24px/14px monospace;
-  color: #e9c477;
-  filter: drop-shadow(0 0 12px #f5d17b99);
+  color: hsl(343 57% 89%);
+  filter: drop-shadow(0 0 12px hsl(343 57% 89% / 0.6));
 }
 .journal-pet {
   position: absolute;
   bottom: 12px;
   right: 29px;
   font: 18px/13px monospace;
-  color: #ffedc9;
+  color: hsl(343 62% 97%);
   white-space: pre;
   text-align: center;
 }
@@ -609,17 +609,17 @@ dialog select {
   margin: 25px 0 18px;
 }
 .journal-date-bar input {
-  background: #fff8e5;
-  border: 1px solid #d3b98b;
+  background: hsl(343 62% 97%);
+  border: 1px solid hsl(343 57% 89%);
   padding: 9px;
   font: 14px monospace;
-  color: #94703f;
+  color: hsl(343 32% 52%);
   min-width: 0;
 }
 .journal-paper {
-  border: 2px solid #d1b284;
-  background: #fffaf0;
-  box-shadow: 4px 4px 0 #ddc49a;
+  border: 2px solid hsl(343 48% 81%);
+  background: hsl(343 62% 97%);
+  box-shadow: 4px 4px 0 hsl(343 57% 89%);
   padding: 28px;
 }
 .journal-paper h2 {
@@ -627,7 +627,7 @@ dialog select {
 }
 .save-state {
   font-size: 10px;
-  color: #ac8756;
+  color: hsl(343 40% 69%);
   line-height: 1.7;
   text-align: right;
 }
@@ -637,22 +637,26 @@ dialog select {
 }
 .journal-question > span {
   font-size: 13px;
-  color: #967346;
+  color: hsl(343 32% 52%);
   display: block;
   margin-bottom: 12px;
 }
 .journal-question b {
   font: 14px monospace;
-  color: #c49c60;
+  color: hsl(343 48% 81%);
   margin-right: 8px;
 }
 .journal-question textarea {
   width: 100%;
   resize: vertical;
-  background: repeating-linear-gradient(#fffdf6, #fffdf6 31px, #ecdab344 32px);
-  border: 1px solid #e3cfaa;
+  background: repeating-linear-gradient(
+    hsl(343 62% 97%),
+    hsl(343 62% 97%) 31px,
+    hsl(343 66% 94% / 0.267) 32px
+  );
+  border: 1px solid hsl(343 57% 89%);
   padding: 10px 14px;
-  color: #805f3b;
+  color: hsl(343 32% 52%);
   font-size: 16px;
   line-height: 32px;
   border-radius: 0;
@@ -660,7 +664,7 @@ dialog select {
   display: block;
 }
 .journal-question textarea::placeholder {
-  color: #c1a881;
+  color: hsl(343 48% 81%);
   font-size: 13px;
 }
 .journal-footer {
@@ -672,7 +676,7 @@ dialog select {
 }
 .journal-footer > span {
   font-size: 10px;
-  color: #b39a74;
+  color: hsl(343 48% 81%);
 }
 .journal-settings,
 .journal-history {
@@ -681,12 +685,12 @@ dialog select {
 }
 .journal-settings label {
   font-size: 13px;
-  color: #9c7946;
+  color: hsl(343 40% 69%);
 }
 .journal-settings p {
   font-size: 11px;
   line-height: 1.9;
-  color: #ae9470;
+  color: hsl(343 40% 69%);
   margin-top: 10px;
 }
 .journal-history h2 {
@@ -694,7 +698,7 @@ dialog select {
 }
 .journal-history h2 span {
   font-size: 11px;
-  color: #b59a70;
+  color: hsl(343 48% 81%);
   margin-left: 9px;
 }
 .journal-history > button {
@@ -704,34 +708,34 @@ dialog select {
   width: 100%;
   padding: 14px 8px;
   text-align: left;
-  border-top: 1px solid #e9d8b7;
+  border-top: 1px solid hsl(343 66% 94%);
   font-size: 12px;
-  color: #a38354;
+  color: hsl(343 40% 69%);
 }
 .journal-history > button.selected {
-  background: #f8e9c9;
+  background: hsl(343 66% 94%);
 }
 .journal-history > button > span:nth-child(2) {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #ac9571;
+  color: hsl(343 40% 69%);
 }
 .journal-history > p {
   font-size: 12px;
-  color: #b69b74;
+  color: hsl(343 48% 81%);
 }
 .evening-reminder {
   display: flex;
   gap: 12px;
   align-items: center;
-  border: 2px solid #c6a26c;
+  border: 2px solid hsl(343 48% 81%);
   padding: 15px;
-  background: #f8e6bf;
+  background: hsl(343 66% 94%);
   margin-bottom: 24px;
   font-size: 13px;
-  color: #956c38;
+  color: hsl(343 32% 52%);
 }
 .evening-reminder > span {
   flex: 1;
@@ -739,7 +743,7 @@ dialog select {
 .evening-reminder small {
   display: block;
   font-size: 10px;
-  color: #b08a54;
+  color: hsl(343 40% 69%);
   margin-top: 7px;
 }
 @media (max-width: 1150px) {
@@ -761,8 +765,8 @@ dialog select {
 }
 @media (max-width: 800px) {
   .sidebar {
-    background: #f7e8c8f5;
-    border-color: #d5b27a;
+    background: hsl(343 66% 94% / 0.961);
+    border-color: hsl(343 48% 81%);
   }
   .nav-item {
     min-width: 64px;
@@ -770,7 +774,7 @@ dialog select {
     border-width: 1px;
   }
   .nav-item.active {
-    box-shadow: 2px 2px 0 #d4b68b;
+    box-shadow: 2px 2px 0 hsl(343 48% 81%);
   }
   .main-content {
     padding-left: 17px;
@@ -951,4 +955,9 @@ dialog select {
   }
 }
 
-h1{font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;letter-spacing:2px;text-shadow:2px 2px #e7c99a}
+h1 {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px hsl(343 57% 89%);
+}
