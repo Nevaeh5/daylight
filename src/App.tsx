@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   dayTasks,
   splitDayTasks,
@@ -21,6 +21,7 @@ import { interact, type PetAction } from "./features/pet/companion";
 import { parseSchedule } from "./domain/parseSchedule";
 import Ideas from "./features/ideas/Ideas";
 import PushSettings from "./features/reminders/PushSettings";
+import AppInstall from "./components/AppInstall";
 type Page = "today" | "calendar" | "journal" | "profile";
 const nav = [
   { id: "today", name: "今天", icon: "sun" },
@@ -51,6 +52,14 @@ export default function App() {
     { id: number; message: string } | undefined
   >();
   const [recognition, setRecognition] = useState("");
+  const contentPane = useRef<HTMLDivElement>(null);
+  const scrollPositions = useRef<Partial<Record<Page, number>>>({});
+  useLayoutEffect(() => {
+    contentPane.current?.scrollTo({
+      top: scrollPositions.current[page] || 0,
+      behavior: "auto",
+    });
+  }, [page]);
   const parsed = quick.trim() ? parseSchedule(quick) : null;
   function celebrate(message: string) {
     setPetFeedback({ id: Date.now(), message });
@@ -307,6 +316,7 @@ export default function App() {
             <button
               key={n.id}
               className={page === n.id ? "nav-item active" : "nav-item"}
+              aria-current={page === n.id ? "page" : undefined}
               onClick={() => setPage(n.id)}
             >
               <Icon name={n.icon} />
@@ -333,17 +343,28 @@ export default function App() {
       </aside>
       <main>
         <header className="topbar">
-          <span>
+          <span className="desktop-breadcrumb">
             <span className="breadcrumb">我的小世界</span>
             <span className="slash">/</span>
             {nav.find((n) => n.id === page)?.name}
+          </span>
+          <span className="mobile-app-title">
+            <img src="/pink-sun-192.png" alt="" width="34" height="34" />
+            daylight<small>{nav.find((n) => n.id === page)?.name}</small>
           </span>
           <span className="topbar-right">
             <i className="status-dot" />
             本地保存 · 可选提醒 <span className="avatar">光</span>
           </span>
         </header>
-        <div className="main-content">
+        <div
+          className="main-content"
+          ref={contentPane}
+          onScroll={(e) => {
+            scrollPositions.current[page] = e.currentTarget.scrollTop;
+          }}
+        >
+          {page === "today" && <AppInstall />}
           {error && (
             <div className="error" role="alert">
               {error}
@@ -706,9 +727,10 @@ export default function App() {
               <section className="panel settings">
                 <h2>安装到主屏幕</h2>
                 <p>
-                  正式 HTTPS 部署后，在 iPhone Safari
-                  中打开，点击「分享」→「添加到主屏幕」。当前电脑的 localhost
-                  地址仅用于电脑预览。
+                  在 iPhone Safari
+                  中打开，点击「分享」→「添加到主屏幕」；若看到「作为网页 App
+                  打开」，请保持开启。之后点击桌面上的粉红色像素太阳，就能以独立
+                  App 窗口启动。Android 可在浏览器菜单中选择「安装应用」。
                 </p>
                 <p className="subtle">
                   本地时区：{Intl.DateTimeFormat().resolvedOptions().timeZone} ·

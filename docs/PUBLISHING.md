@@ -1,5 +1,7 @@
 # Daylight 发布状态与直接发布流程
 
+当前生产站点为 https://fancy-marshmallow-6241c4.netlify.app/ ，Netlify 项目 ID 为 `dc3808c9-d212-4e14-ba92-4c72e28c3742`。原教程中的 animated-faloodeh 地址已失效。生产分支为 `Nevaeh5/daylight` 的 `main`。
+
 本地工程已经关联 `https://github.com/Nevaeh5/daylight.git`，跟踪 `origin/main`。远端最初通过 GitHub 网页上传的源代码已作为本地历史基础，保留所有工作文件。本次粉色像素主题可在本地预览，发布需要 GitHub 写入授权。
 
 ## 一次授权，后续直接发布

@@ -5,6 +5,7 @@ import "./styles.css";
 import "./pixel-upgrade.css";
 import "./rose-game.css";
 import "./planning.css";
+import "./mobile-app.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />

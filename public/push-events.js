@@ -8,8 +8,8 @@ self.addEventListener("push", (event) => {
   event.waitUntil(
     self.registration.showNotification(message.title || "Daylight · 日程提醒", {
       body: message.body || "有一件安排快开始了。",
-      icon: "/icon-192.png",
-      badge: "/icon-192.png",
+      icon: "/pink-sun-192.png",
+      badge: "/pink-sun-192.png",
       tag: message.tag || "daylight-reminder",
       data: { url: "/" },
     }),

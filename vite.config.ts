@@ -7,25 +7,27 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: "script",
-      includeAssets: ["icon.svg", "apple-touch-icon.png"],
+      includeAssets: ["icon.svg", "pink-sun-apple.png"],
       manifest: {
         name: "Daylight · 像素日程管家",
         short_name: "Daylight",
+        id: "/",
+        scope: "/",
         lang: "zh-CN",
         start_url: "/",
         display: "standalone",
         background_color: "#fff0f5",
         theme_color: "#fff0f5",
         icons: [
-          { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
+          { src: "/pink-sun-192.png", sizes: "192x192", type: "image/png" },
           {
-            src: "/icon-512.png",
+            src: "/pink-sun-512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any",
           },
           {
-            src: "/icon-maskable.png",
+            src: "/pink-sun-maskable.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
