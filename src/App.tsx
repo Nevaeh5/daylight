@@ -18,6 +18,9 @@ import MonthCalendar from "./features/calendar/MonthCalendar";
 import JournalPage from "./features/journal/JournalPage";
 import EveningReminder from "./features/journal/EveningReminder";
 import { interact, type PetAction } from "./features/pet/companion";
+import { parseSchedule } from "./domain/parseSchedule";
+import Ideas from "./features/ideas/Ideas";
+import PushSettings from "./features/reminders/PushSettings";
 type Page = "today" | "calendar" | "journal" | "profile";
 const nav = [
   { id: "today", name: "今天", icon: "sun" },
@@ -47,6 +50,8 @@ export default function App() {
   const [petFeedback, setPetFeedback] = useState<
     { id: number; message: string } | undefined
   >();
+  const [recognition, setRecognition] = useState("");
+  const parsed = quick.trim() ? parseSchedule(quick) : null;
   function celebrate(message: string) {
     setPetFeedback({ id: Date.now(), message });
   }
@@ -90,12 +95,14 @@ export default function App() {
   const dateObj = new Date(date + "T12:00:00"),
     isToday = date === today;
   function newTask(title = "", focused = false) {
+    setRecognition("");
     const now = new Date().toISOString();
     setEditor({
       id: crypto.randomUUID(),
       title,
       date,
       time: "",
+      reminderMinutes: 15,
       notes: "",
       priority: "normal",
       done: false,
@@ -115,7 +122,15 @@ export default function App() {
       return false;
     }
     const success = commit((d) => putTask(d, t));
-    if (success) setToast("已保存在这台设备上");
+    if (success) {
+      setToast(
+        t.time && t.reminderMinutes === 15
+          ? `已保存到 ${t.date}，请确认后台提醒同步状态`
+          : "已保存在这台设备上",
+      );
+      setQuick("");
+      setDate(t.date);
+    }
     return success;
   }
   function toggle(t: Task) {
@@ -219,7 +234,13 @@ export default function App() {
       >
         {t.done && <Icon name="check" size={15} />}
       </button>
-      <button className="task-content" onClick={() => setEditor(t)}>
+      <button
+        className="task-content"
+        onClick={() => {
+          setRecognition("");
+          setEditor(t);
+        }}
+      >
         <span className="task-title">{t.title}</span>
         <span className="task-meta">
           {timeline
@@ -227,6 +248,7 @@ export default function App() {
             : t.time || "时间由你决定"}
           {t.priority === "high" && " · 优先"}
           {t.notes && " · 有备注"}
+          {t.time && t.reminderMinutes === 15 && " · 提前15分钟提醒"}
         </span>
       </button>
       {!timeline && (
@@ -252,7 +274,10 @@ export default function App() {
       <button
         className="icon-button task-edit"
         aria-label={`编辑 ${t.title}`}
-        onClick={() => setEditor(t)}
+        onClick={() => {
+          setRecognition("");
+          setEditor(t);
+        }}
       >
         <Icon name="edit" size={16} />
       </button>
@@ -315,7 +340,7 @@ export default function App() {
           </span>
           <span className="topbar-right">
             <i className="status-dot" />
-            只存在你的设备上 <span className="avatar">光</span>
+            本地保存 · 可选提醒 <span className="avatar">光</span>
           </span>
         </header>
         <div className="main-content">
@@ -435,7 +460,7 @@ export default function App() {
                       <span className="section-icon green">
                         <Icon name="clock" />
                       </span>
-                      <h2>今日安排</h2>
+                      <h2>{isToday ? "今日安排" : "当日安排"}</h2>
                       <span className="pill neutral">
                         {schedule.length} 件小事
                       </span>
@@ -449,7 +474,8 @@ export default function App() {
                     </button>
                   </div>
                   <p className="section-description">
-                    有计划地出发，也允许偶尔停一停。
+                    {isToday ? "今天" : "这一天"}除 Top 3
+                    以外的其他安排，与随心记分开保存。
                   </p>
                   <div className="timeline">
                     {schedule.length ? (
@@ -488,8 +514,25 @@ export default function App() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (quick.trim()) {
-                    newTask(quick.trim());
-                    setQuick("");
+                    const result = parseSchedule(quick);
+                    const now = new Date().toISOString();
+                    setRecognition(
+                      `已识别：${result.date} ${result.time || "待补充时间"}。${result.warnings.join(" ")}`,
+                    );
+                    setEditor({
+                      id: crypto.randomUUID(),
+                      title: result.title,
+                      date: result.date,
+                      time: result.time,
+                      reminderMinutes: 15,
+                      notes: "",
+                      priority: "normal",
+                      done: false,
+                      focus: false,
+                      order: Date.now(),
+                      createdAt: now,
+                      updatedAt: now,
+                    });
                   }
                 }}
               >
@@ -498,25 +541,44 @@ export default function App() {
                 </span>
                 <div className="quick-input">
                   <label className="sr-only" htmlFor="quick">
-                    快速记录任务
+                    一句话添加日程
                   </label>
                   <input
                     id="quick"
                     value={quick}
                     onChange={(e) => setQuick(e.target.value)}
-                    maxLength={120}
-                    placeholder="有什么想做的？先记下来…"
+                    maxLength={200}
+                    placeholder="明天下午三点半去看牙医"
                   />
-                  <span>先写下这件事，再确认日期与时间</span>
+                  <span>
+                    {parsed
+                      ? `${parsed.date} · ${parsed.time || "时间待补充"} · ${parsed.time ? "提前15分钟提醒" : "补充时间后可提醒"}`
+                      : "一句话添加日程 · 自动识别日期和时间，默认提前15分钟提醒"}
+                  </span>
                 </div>
                 <button
                   type="submit"
                   className="primary"
                   disabled={!quick.trim()}
                 >
-                  记下来 <Icon name="arrow" size={16} />
+                  核对并添加 <Icon name="arrow" size={16} />
                 </button>
               </form>
+              <Ideas
+                data={data}
+                commit={commit}
+                onDelete={(id) =>
+                  setConfirmation({
+                    text: "删除这条随心记？",
+                    run: () => {
+                      commit((d) => ({
+                        ...d,
+                        ideas: (d.ideas || []).filter((i) => i.id !== id),
+                      }));
+                    },
+                  })
+                }
+              />
               <div className="bottom-note">
                 <span>小光陪你的第一个小世界</span>
                 <span>不用完美，今天的你已经很好。</span>
@@ -594,7 +656,8 @@ export default function App() {
                   当前为本地陪伴版，共 {data.tasks.length} 个任务、
                   {data.journals?.filter((j) => j.answers.some((a) => a.trim()))
                     .length || 0}{" "}
-                  篇日记。保存在此浏览器中，尚未开通云同步。清除浏览器数据会删除本地记录，请定期备份。
+                  篇日记、{data.ideas?.length || 0}{" "}
+                  条随心记。完整内容保存在此浏览器中，尚未开通跨设备同步；开启提醒后，仅需提醒的日程会同步到后台。清除浏览器数据会删除本地记录，请定期备份。
                 </p>
                 <div className="settings-buttons">
                   <button
@@ -627,7 +690,7 @@ export default function App() {
                           JSON.parse(await file.text()),
                         );
                         setConfirmation({
-                          text: `将用备份中的 ${imported.tasks.length} 个任务及 ${imported.journals?.length || 0} 篇日记替换此设备的全部数据（含陪伴记录）。是否继续？`,
+                          text: `将用备份中的 ${imported.tasks.length} 个任务、${imported.ideas?.length || 0} 条随心记及 ${imported.journals?.length || 0} 篇日记替换此设备的全部数据（含陪伴记录和后台提醒安排）。是否继续？`,
                           run: () => {
                             if (commit(() => imported, true))
                               setToast("备份已恢复");
@@ -658,12 +721,15 @@ export default function App() {
                   <b>01 正在这里</b>　像素小屋、任务与 Top 3、本地保存
                 </p>
                 <p>02　账户登录、安全的云同步</p>
-                <p>03　月历已开放；中文语义解析与事件待接入</p>
-                <p>04　日记与小光互动已开放；奖励与后台提醒待接入</p>
-                <p>05　后台推送、Google 日历同步、部署优化</p>
+                <p>03　月历、一句话识别日程、独立随心记</p>
+                <p>04　日记与小光互动、提前15分钟后台提醒</p>
+                <p>05　账户与跨设备同步、Google 日历同步</p>
               </section>
             </>
           )}
+          <div hidden={page !== "today" && page !== "profile"}>
+            <PushSettings data={data} />
+          </div>
         </div>
       </main>
       {confirmation && (
@@ -678,6 +744,7 @@ export default function App() {
           existing={data.tasks.some((t) => t.id === editor.id)}
           key={editor.id}
           task={editor}
+          recognition={recognition}
           onClose={() => setEditor(null)}
           onSave={save}
           onDelete={remove}

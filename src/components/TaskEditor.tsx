@@ -7,14 +7,17 @@ export default function TaskEditor({
   onSave,
   onClose,
   onDelete,
+  recognition,
 }: {
   task: Task;
   existing: boolean;
   onSave: (t: Task) => boolean;
   onClose: () => void;
   onDelete: (id: string) => void;
+  recognition?: string;
 }) {
   const [failed, setFailed] = useState(false);
+  const [time, setTime] = useState(task.time);
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     dialog.current?.showModal();
@@ -43,6 +46,7 @@ export default function TaskEditor({
               priority: f.get("priority") as Task["priority"],
               notes: String(f.get("notes")),
               focus: f.get("focus") === "on",
+              reminderMinutes: time && f.get("reminder") === "on" ? 15 : null,
               updatedAt: new Date().toISOString(),
             })
           )
@@ -61,6 +65,11 @@ export default function TaskEditor({
             <Icon name="close" />
           </button>
         </div>
+        {recognition && (
+          <p className="recognition-note" role="status">
+            {recognition}
+          </p>
+        )}
         <label>
           想完成什么？
           <input
@@ -79,9 +88,27 @@ export default function TaskEditor({
           </label>
           <label>
             时间（可选）
-            <input type="time" name="time" defaultValue={task.time} />
+            <input
+              type="time"
+              name="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+            />
           </label>
         </div>
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            name="reminder"
+            defaultChecked={task.reminderMinutes !== null}
+            disabled={!time}
+          />
+          提前 15 分钟提醒{!time && "（先填写时间）"}
+        </label>
+        <p className="reminder-help">
+          请在首页开启后台提醒并确认同步成功；若距开始不足 15
+          分钟，将尽快提醒。请核对日期、时间后保存。
+        </p>
         <label>
           优先级
           <select name="priority" defaultValue={task.priority}>

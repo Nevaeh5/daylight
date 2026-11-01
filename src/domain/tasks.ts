@@ -18,8 +18,16 @@ export const taskSchema = z.object({
   order: z.number().finite(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  reminderMinutes: z.union([z.literal(15), z.null()]).optional(),
 });
 export type Task = z.infer<typeof taskSchema>;
+export const ideaSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().trim().min(1).max(120),
+  done: z.boolean(),
+  createdAt: z.string(),
+});
+export type Idea = z.infer<typeof ideaSchema>;
 export const journalSchema = z.object({
   date: daySchema,
   answers: z.tuple([
@@ -34,6 +42,7 @@ export const dataSchema = z
   .object({
     version: z.literal(1),
     tasks: z.array(taskSchema).max(10000),
+    ideas: z.array(ideaSchema).max(10000).optional(),
     journals: z.array(journalSchema).max(10000).optional(),
     pet: z
       .object({
@@ -49,6 +58,12 @@ export const dataSchema = z
     const counts = new Map<string, number>();
     const ids = new Set<string>();
     const journalDates = new Set<string>();
+    const ideaIds = new Set<string>();
+    for (const idea of d.ideas || []) {
+      if (ideaIds.has(idea.id))
+        ctx.addIssue({ code: "custom", message: "随心记 ID 重复" });
+      ideaIds.add(idea.id);
+    }
     for (const j of d.journals || []) {
       if (journalDates.has(j.date))
         ctx.addIssue({ code: "custom", message: "每天只能有一份日记" });

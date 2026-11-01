@@ -1,0 +1,81 @@
+.ideas-panel,
+.push-settings {
+  margin-top: 24px;
+  padding: 24px;
+}
+.idea-form,
+.push-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.idea-form input {
+  flex: 1;
+  min-width: 160px;
+  border: 2px solid #e7b5c8;
+  background: #fff8fa;
+  color: #75445b;
+  padding: 12px;
+  font-size: 16px;
+}
+.ideas-list {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+  max-height: 360px;
+  overflow: auto;
+}
+.ideas-list .task-title {
+  flex: 1;
+  padding: 8px 0;
+}
+.push-settings h2 {
+  font-size: 17px;
+  color: #75445b;
+}
+.push-settings p {
+  font-size: 12px;
+  color: #8b5e72;
+  line-height: 1.9;
+  margin: 12px 0;
+}
+.push-settings .subtle {
+  color: #98677c;
+  font-size: 11px;
+}
+.recognition-note {
+  padding: 12px;
+  background: #fbe7ef;
+  color: #75445b;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 16px;
+}
+.reminder-help {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #8b5e72;
+  margin-top: 9px;
+}
+.quick-add .quick-input span {
+  line-height: 1.8;
+}
+@media (max-width: 600px) {
+  .ideas-panel,
+  .push-settings {
+    padding: 18px;
+  }
+  .quick-add {
+    flex-wrap: wrap;
+  }
+  .quick-add .quick-input {
+    flex-basis: calc(100% - 55px);
+  }
+  .quick-add > .primary {
+    margin-left: auto;
+  }
+  .push-actions > button {
+    flex: 1;
+  }
+}

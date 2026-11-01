@@ -4,6 +4,7 @@ import App from "./App";
 import "./styles.css";
 import "./pixel-upgrade.css";
 import "./rose-game.css";
+import "./planning.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />

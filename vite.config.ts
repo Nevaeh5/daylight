@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "prompt",
+      registerType: "autoUpdate",
       injectRegister: "script",
       includeAssets: ["icon.svg", "apple-touch-icon.png"],
       manifest: {
@@ -33,6 +33,8 @@ export default defineConfig({
         ],
       },
       workbox: {
+        importScripts: ["/push-events.js"],
+        navigateFallbackDenylist: [/^\/\.netlify\//],
         globPatterns: ["**/*.{js,css,html,png,svg,woff2}"],
         navigateFallback: "index.html",
       },
