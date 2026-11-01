@@ -28,17 +28,24 @@
   body,
   #root {
     height: 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow: hidden;
     overscroll-behavior: none;
   }
   body {
+    position: fixed;
+    inset: 0;
     background: #fff0f5;
+    touch-action: pan-y pinch-zoom;
   }
   .app-shell {
     display: block;
     height: 100dvh;
     min-height: 0;
     max-width: none;
+    width: 100%;
     overflow: hidden;
   }
   .app-shell > main {
@@ -88,7 +95,9 @@
     width: 100%;
     max-width: none;
     overflow-y: auto;
-    overscroll-behavior-y: contain;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    touch-action: pan-y pinch-zoom;
     -webkit-overflow-scrolling: touch;
     padding: 16px max(17px, env(safe-area-inset-right, 0px))
       calc(100px + env(safe-area-inset-bottom, 0px))
@@ -98,6 +107,33 @@
   }
   .main-content::-webkit-scrollbar {
     display: none;
+  }
+  .timeline,
+  .ideas-list,
+  dialog {
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    touch-action: pan-y pinch-zoom;
+  }
+  /* iOS zooms on smaller form controls, which can leave the whole UI panned. */
+  .main-content input,
+  .main-content textarea,
+  .main-content select,
+  dialog input,
+  dialog textarea,
+  dialog select {
+    font-size: 16px;
+  }
+  .quick-input input {
+    transform: none;
+    width: 100%;
+  }
+  .date-control {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .date-picker input {
+    width: 126px;
   }
   .sidebar .brand,
   .sidebar-caption,
