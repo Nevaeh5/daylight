@@ -38,12 +38,21 @@ export const journalSchema = z.object({
   updatedAt: z.string(),
 });
 export type Journal = z.infer<typeof journalSchema>;
+export const journalEntrySchema = z.object({
+  id: z.string().min(1),
+  date: daySchema,
+  text: z.string().trim().min(1).max(12000),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type JournalEntry = z.infer<typeof journalEntrySchema>;
 export const dataSchema = z
   .object({
     version: z.literal(1),
     tasks: z.array(taskSchema).max(10000),
     ideas: z.array(ideaSchema).max(10000).optional(),
     journals: z.array(journalSchema).max(10000).optional(),
+    journalEntries: z.array(journalEntrySchema).max(10000).optional(),
     pet: z
       .object({
         bond: z.number().int().min(0).max(5),
@@ -58,6 +67,12 @@ export const dataSchema = z
     const counts = new Map<string, number>();
     const ids = new Set<string>();
     const journalDates = new Set<string>();
+    const entryIds = new Set<string>();
+    for (const entry of d.journalEntries || []) {
+      if (entryIds.has(entry.id))
+        ctx.addIssue({ code: "custom", message: "日记记录 ID 重复" });
+      entryIds.add(entry.id);
+    }
     const ideaIds = new Set<string>();
     for (const idea of d.ideas || []) {
       if (ideaIds.has(idea.id))

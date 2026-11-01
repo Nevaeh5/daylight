@@ -106,7 +106,7 @@ export default function TaskEditor({
           提前 15 分钟提醒{!time && "（先填写时间）"}
         </label>
         <p className="reminder-help">
-          请在首页开启后台提醒并确认同步成功；若距开始不足 15
+          请在「我的」开启后台提醒并确认同步成功；若距开始不足 15
           分钟，将尽快提醒。请核对日期、时间后保存。
         </p>
         <label>

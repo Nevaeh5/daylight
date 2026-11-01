@@ -6,6 +6,7 @@ export function shouldRemind(data: Data, now: Date) {
     data.journalReminderEnabled !== false &&
     now.getHours() >= 22 &&
     data.reminderDismissedOn !== day &&
+    !(data.journalEntries || []).some((j) => j.date === day && j.text.trim()) &&
     !(data.journals || []).some(
       (j) => j.date === day && j.answers.some((a) => a.trim()),
     )

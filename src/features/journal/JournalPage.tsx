@@ -1,97 +1,171 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   daySchema,
   localDay,
   shiftDay,
   type Data,
-  type Journal,
-  putJournal,
+  type JournalEntry,
 } from "../../domain/tasks";
+import { entriesForDay, saveEntry, deleteEntry } from "./entries";
 import Icon from "../../components/Icon";
-const prompts = [
-  "今天让我开心的一件小事",
-  "今天想感谢的人或事",
-  "今天值得肯定的自己",
-];
-type Commit = (update: (d: Data) => Data) => boolean;
-function JournalEditor({
-  entry,
+import Confirmation from "../../components/Confirmation";
+type Commit = (update: (data: Data) => Data) => boolean;
+function EntryComposer({
   date,
   commit,
   onSaved,
 }: {
-  entry?: Journal;
   date: string;
   commit: Commit;
   onSaved: () => void;
 }) {
-  const [answers, setAnswers] = useState<Journal["answers"]>(
-    entry?.answers || ["", "", ""],
-  );
-  const [saved, setSaved] = useState(!!entry);
+  const draftKey = `daylight.journal.draft.${date}`;
+  const [text, setText] = useState(() => {
+    try {
+      return sessionStorage.getItem(draftKey) || "";
+    } catch {
+      return "";
+    }
+  });
   const [failed, setFailed] = useState(false);
-  useEffect(() => {
-    setAnswers(entry?.answers || ["", "", ""]);
-    setSaved(!!entry);
-    setFailed(false);
-  }, [entry]);
-  function update(i: number, text: string) {
-    const next = [...answers] as Journal["answers"];
-    next[i] = text;
-    setAnswers(next);
-    const ok = commit((d) =>
-      putJournal(d, {
-        date,
-        answers: next,
-        updatedAt: new Date().toISOString(),
-      }),
-    );
-    setSaved(ok);
-    setFailed(!ok);
-  }
   return (
-    <section className="journal-paper">
-      <div className="section-heading">
-        <h2>给这一天，留一点光</h2>
-        <span className="save-state" role="status">
-          {failed
-            ? "保存失败，内容仍在当前页面"
-            : saved
-              ? "✓ 已自动保存在此设备"
-              : "写下即自动保存"}
-        </span>
-      </div>
-      {prompts.map((p, i) => (
-        <label className="journal-question" key={p}>
-          <span>
-            <b>0{i + 1}</b> {p}
-          </span>
-          <textarea
-            value={answers[i]}
-            onChange={(e) => update(i, e.target.value)}
-            maxLength={12000}
-            rows={4}
-            placeholder={
-              [
-                "一顿热饭、一阵晚风，也值得被记住…",
-                "谢谢那个给你温暖的人，也可以谢谢自己…",
-                "今天的你，已经做得很好了…",
-              ][i]
-            }
-          />
-        </label>
-      ))}
-      <div className="journal-footer">
-        <span>只属于你的记录 · 不会发送给 AI</span>
-        <button
-          className="primary"
-          disabled={!saved || !answers.some((a) => a.trim()) || failed}
-          onClick={onSaved}
-        >
-          收好今天的美好 <Icon name="check" size={16} />
+    <form
+      className="panel journal-composer"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!text.trim()) return;
+        const now = new Date().toISOString();
+        if (
+          commit((d) =>
+            saveEntry(d, {
+              id: crypto.randomUUID(),
+              date,
+              text: text.trim(),
+              createdAt: now,
+              updatedAt: now,
+            }),
+          )
+        ) {
+          setText("");
+          setFailed(false);
+          try {
+            sessionStorage.removeItem(draftKey);
+          } catch {
+            /* Draft storage is optional. */
+          }
+          onSaved();
+        } else setFailed(true);
+      }}
+    >
+      <label className="sr-only" htmlFor="journal-text">
+        感恩日记
+      </label>
+      <textarea
+        id="journal-text"
+        rows={4}
+        maxLength={12000}
+        value={text}
+        placeholder="写下一件想记住的小事…"
+        onChange={(e) => {
+          setText(e.target.value);
+          try {
+            sessionStorage.setItem(draftKey, e.target.value);
+          } catch {
+            /* Keep the draft in memory. */
+          }
+        }}
+      />
+      <div className="journal-submit">
+        <small>{text.length} / 12000</small>
+        <button className="primary" disabled={!text.trim()}>
+          提交记录 <Icon name="check" size={16} />
         </button>
       </div>
-    </section>
+      {failed && <p role="alert">保存失败，内容已保留，请重试。</p>}
+    </form>
+  );
+}
+function EntryRow({
+  entry,
+  commit,
+  onDelete,
+}: {
+  entry: JournalEntry;
+  commit: Commit;
+  onDelete: () => void;
+}) {
+  const [editing, setEditing] = useState(false),
+    [text, setText] = useState(entry.text),
+    [failed, setFailed] = useState(false);
+  return (
+    <article className="panel journal-entry">
+      {editing ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (
+              commit((d) =>
+                saveEntry(d, {
+                  ...entry,
+                  text,
+                  updatedAt: new Date().toISOString(),
+                }),
+              )
+            ) {
+              setEditing(false);
+              setFailed(false);
+            } else setFailed(true);
+          }}
+        >
+          <label className="sr-only" htmlFor={`edit-${entry.id}`}>
+            编辑日记记录
+          </label>
+          <textarea
+            id={`edit-${entry.id}`}
+            rows={3}
+            maxLength={12000}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <div className="journal-entry-actions">
+            <button
+              type="button"
+              className="text-button"
+              onClick={() => setEditing(false)}
+            >
+              取消
+            </button>
+            <button className="primary" disabled={!text.trim()}>
+              保存修改
+            </button>
+          </div>
+          {failed && <p role="alert">保存失败，请重试。</p>}
+        </form>
+      ) : (
+        <>
+          <p className="journal-entry-text">{entry.text}</p>
+          <div className="journal-entry-actions">
+            <button
+              className="text-button"
+              aria-label={`编辑记录：${entry.text.slice(0, 20)}`}
+              onClick={() => {
+                setText(entry.text);
+                setEditing(true);
+              }}
+            >
+              编辑
+            </button>
+            <button
+              className="text-button"
+              aria-label={`删除记录：${entry.text.slice(0, 20)}`}
+              onClick={onDelete}
+            >
+              删除
+            </button>
+          </div>
+        </>
+      )}
+    </article>
   );
 }
 export default function JournalPage({
@@ -103,37 +177,15 @@ export default function JournalPage({
   commit: Commit;
   onCelebrate: () => void;
 }) {
-  const [date, setDate] = useState(localDay);
-  const entry = data.journals?.find((j) => j.date === date);
-  const records = [...(data.journals || [])]
-    .filter((j) => j.answers.some((a) => a.trim()))
-    .sort((a, b) => b.date.localeCompare(a.date));
+  const [date, setDate] = useState(localDay),
+    [deleting, setDeleting] = useState<JournalEntry | null>(null);
+  const entries = entriesForDay(data, date);
   return (
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">SAVE A LITTLE GOODNESS</div>
-          <h1>每一刻，都值得被记住</h1>
-          <p>白天的雀跃，夜晚的温柔。想写的时候，随时来。</p>
-        </div>
-      </div>
-      <div className="journal-scene">
-        <span className="pixel-moon">☾</span>
-        <span className="journal-stars">✦ · ✧ · ✦</span>
-        <div className="pixel-lamp">
-          ▟<br />┃<br />━
-        </div>
-        <div className="journal-pet">
-          ◢◣
-          <br />
-          ▌•ᴥ•▐
-          <br />
-          ▚▂▞
-        </div>
-        <div>
-          <span className="eyebrow">小光的美好收集站</span>
-          <h2>“我想听听你今天的小幸福。”</h2>
-          <p>不用等到睡前，也不用写得很完整。</p>
+          <h1>感恩日记</h1>
+          <p>想记住的，就写下来。</p>
         </div>
       </div>
       <div className="journal-date-bar">
@@ -145,8 +197,8 @@ export default function JournalPage({
           <Icon name="arrow" />
         </button>
         <input
-          aria-label="日记日期"
           type="date"
+          aria-label="日记日期"
           value={date}
           onChange={(e) => {
             if (daySchema.safeParse(e.target.value).success)
@@ -164,52 +216,35 @@ export default function JournalPage({
           今天
         </button>
       </div>
-      <JournalEditor
+      <EntryComposer
         key={date}
-        entry={entry}
         date={date}
         commit={commit}
         onSaved={onCelebrate}
       />
-      <section className="panel journal-settings">
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            checked={data.journalReminderEnabled !== false}
-            onChange={(e) =>
-              commit((d) => ({
-                ...d,
-                journalReminderEnabled: e.target.checked,
-              }))
-            }
-          />{" "}
-          22:00 小光晚安提醒
-        </label>
-        <p>
-          目前仅在应用打开时显示提醒；全天可写。锁屏与关闭应用后的推送尚未接入。按设备时区：
-          {Intl.DateTimeFormat().resolvedOptions().timeZone}。
-        </p>
-      </section>
-      <section className="panel journal-history">
-        <h2>
-          美好足迹 <span>{records.length} 天</span>
-        </h2>
-        {records.length ? (
-          records.map((j) => (
-            <button
-              key={j.date}
-              onClick={() => setDate(j.date)}
-              className={date === j.date ? "selected" : ""}
-            >
-              <span>{j.date}</span>
-              <span>{j.answers.find((a) => a.trim())}</span>
-              <Icon name="arrow" size={14} />
-            </button>
-          ))
-        ) : (
-          <p>你的第一份美好，正等着被记下。</p>
+      <section className="journal-entries" aria-label="这一天的日记记录">
+        {[...entries].reverse().map((entry) => (
+          <EntryRow
+            key={entry.id}
+            entry={entry}
+            commit={commit}
+            onDelete={() => setDeleting(entry)}
+          />
+        ))}
+        {!entries.length && (
+          <p className="agenda-empty">这一天还没有记录，写一条就好。</p>
         )}
       </section>
+      {deleting && (
+        <Confirmation
+          text="删除这条日记记录？"
+          onClose={() => setDeleting(null)}
+          onConfirm={() => {
+            commit((d) => deleteEntry(d, deleting));
+            setDeleting(null);
+          }}
+        />
+      )}
     </>
   );
 }

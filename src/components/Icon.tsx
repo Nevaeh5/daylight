@@ -4,6 +4,7 @@ const paths: Record<string, string> = {
   book: "M5 4h14v17H5zM8 4v17m3-12h5m-5 4h5",
   user: "M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M5 21v-3a7 7 0 0 1 14 0v3",
   plus: "M12 5v14M5 12h14",
+  wand: "m4 19 11-11 4 4L8 23M12 11l4 4M5 3v4M3 5h4M19 2v4m-2-2h4M4 11v4m-2-2h4",
   arrow: "m9 5 7 7-7 7",
   check: "m5 12 4 4L19 6",
   star: "m12 3 3 6 6 1-4 5 1 6-6-3-6 3 1-6-4-5 6-1z",

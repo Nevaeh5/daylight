@@ -61,6 +61,61 @@
 .quick-add .quick-input span {
   line-height: 1.8;
 }
+.dashboard-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.dashboard-grid > .quick-add {
+  margin: 0;
+}
+.quick-input > span:empty {
+  display: none;
+}
+.journal-composer,
+.journal-entry {
+  padding: 18px;
+}
+.journal-composer textarea,
+.journal-entry textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid #e8bdd0;
+  background: #fff8fb;
+  color: #704458;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.journal-submit,
+.journal-entry-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+.journal-submit small {
+  margin-right: auto;
+  color: #a87990;
+  font-size: 11px;
+}
+.journal-entries {
+  display: grid;
+  gap: 15px;
+  margin-top: 20px;
+}
+.journal-entry-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.9;
+  font-size: 15px;
+}
+.journal-entry-actions .text-button {
+  font-size: 12px;
+  color: #a87990;
+}
 @media (max-width: 600px) {
   .ideas-panel,
   .push-settings {

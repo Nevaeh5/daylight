@@ -134,7 +134,7 @@ export default function App() {
     if (success) {
       setToast(
         t.time && t.reminderMinutes === 15
-          ? `已保存到 ${t.date}，请确认后台提醒同步状态`
+          ? `已保存到 ${t.date}，请在「我的」确认提醒同步状态`
           : "已保存在这台设备上",
       );
       setQuick("");
@@ -364,7 +364,7 @@ export default function App() {
             scrollPositions.current[page] = e.currentTarget.scrollTop;
           }}
         >
-          {page === "today" && <AppInstall />}
+          {page === "profile" && <AppInstall />}
           {error && (
             <div className="error" role="alert">
               {error}
@@ -475,6 +475,61 @@ export default function App() {
                     </span>
                   </div>
                 </section>
+                <form
+                  className="quick-add"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (quick.trim()) {
+                      const result = parseSchedule(quick);
+                      const now = new Date().toISOString();
+                      setRecognition(
+                        `已识别：${result.date} ${result.time || "待补充时间"}。${result.warnings.join(" ")}`,
+                      );
+                      setEditor({
+                        id: crypto.randomUUID(),
+                        title: result.title,
+                        date: result.date,
+                        time: result.time,
+                        reminderMinutes: 15,
+                        notes: "",
+                        priority: "normal",
+                        done: false,
+                        focus: false,
+                        order: Date.now(),
+                        createdAt: now,
+                        updatedAt: now,
+                      });
+                    }
+                  }}
+                >
+                  <span className="input-spark" title="一句话识别日期与时间">
+                    <Icon name="wand" />
+                  </span>
+                  <div className="quick-input">
+                    <label className="sr-only" htmlFor="quick">
+                      一句话添加日程
+                    </label>
+                    <input
+                      id="quick"
+                      value={quick}
+                      onChange={(e) => setQuick(e.target.value)}
+                      maxLength={200}
+                      placeholder=""
+                    />
+                    <span>
+                      {parsed
+                        ? `${parsed.date} · ${parsed.time || "时间待补充"} · ${parsed.time ? "提前15分钟提醒" : "补充时间后可提醒"}`
+                        : ""}
+                    </span>
+                  </div>
+                  <button
+                    type="submit"
+                    className="primary"
+                    disabled={!quick.trim()}
+                  >
+                    核对并添加 <Icon name="arrow" size={16} />
+                  </button>
+                </form>
                 <section className="panel timeline-panel">
                   <div className="section-heading">
                     <div className="section-title">
@@ -530,61 +585,7 @@ export default function App() {
                   </div>
                 </section>
               </div>
-              <form
-                className="quick-add"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (quick.trim()) {
-                    const result = parseSchedule(quick);
-                    const now = new Date().toISOString();
-                    setRecognition(
-                      `已识别：${result.date} ${result.time || "待补充时间"}。${result.warnings.join(" ")}`,
-                    );
-                    setEditor({
-                      id: crypto.randomUUID(),
-                      title: result.title,
-                      date: result.date,
-                      time: result.time,
-                      reminderMinutes: 15,
-                      notes: "",
-                      priority: "normal",
-                      done: false,
-                      focus: false,
-                      order: Date.now(),
-                      createdAt: now,
-                      updatedAt: now,
-                    });
-                  }
-                }}
-              >
-                <span className="input-spark">
-                  <Icon name="plus" />
-                </span>
-                <div className="quick-input">
-                  <label className="sr-only" htmlFor="quick">
-                    一句话添加日程
-                  </label>
-                  <input
-                    id="quick"
-                    value={quick}
-                    onChange={(e) => setQuick(e.target.value)}
-                    maxLength={200}
-                    placeholder="明天下午三点半去看牙医"
-                  />
-                  <span>
-                    {parsed
-                      ? `${parsed.date} · ${parsed.time || "时间待补充"} · ${parsed.time ? "提前15分钟提醒" : "补充时间后可提醒"}`
-                      : "一句话添加日程 · 自动识别日期和时间，默认提前15分钟提醒"}
-                  </span>
-                </div>
-                <button
-                  type="submit"
-                  className="primary"
-                  disabled={!quick.trim()}
-                >
-                  核对并添加 <Icon name="arrow" size={16} />
-                </button>
-              </form>
+
               <Ideas
                 data={data}
                 commit={commit}
@@ -667,18 +668,14 @@ export default function App() {
               <div className="page-heading">
                 <div>
                   <div className="eyebrow">A SPACE OF YOUR OWN</div>
-                  <h1>我的小角落</h1>
-                  <p>照顾好日程，也照顾好自己的数据。</p>
+                  <h1>设置</h1>
+                  <p>通知、备份与安装。</p>
                 </div>
               </div>
               <section className="panel settings">
                 <h2>数据与备份</h2>
                 <p>
-                  当前为本地陪伴版，共 {data.tasks.length} 个任务、
-                  {data.journals?.filter((j) => j.answers.some((a) => a.trim()))
-                    .length || 0}{" "}
-                  篇日记、{data.ideas?.length || 0}{" "}
-                  条随心记。完整内容保存在此浏览器中，尚未开通跨设备同步；开启提醒后，仅需提醒的日程会同步到后台。清除浏览器数据会删除本地记录，请定期备份。
+                  数据保存在此浏览器中。你可以导出备份或从备份恢复。开启后台提醒后，仅需提醒的日程会同步到后台。
                 </p>
                 <div className="settings-buttons">
                   <button
@@ -711,7 +708,7 @@ export default function App() {
                           JSON.parse(await file.text()),
                         );
                         setConfirmation({
-                          text: `将用备份中的 ${imported.tasks.length} 个任务、${imported.ideas?.length || 0} 条随心记及 ${imported.journals?.length || 0} 篇日记替换此设备的全部数据（含陪伴记录和后台提醒安排）。是否继续？`,
+                          text: `将用备份中的 ${imported.tasks.length} 个任务、${imported.ideas?.length || 0} 条随心记及 ${(imported.journalEntries?.length || 0) + (imported.journals?.reduce((n, j) => n + j.answers.filter((a) => a.trim()).length, 0) || 0)} 条日记替换此设备的全部数据（含陪伴记录和后台提醒安排）。是否继续？`,
                           run: () => {
                             if (commit(() => imported, true))
                               setToast("备份已恢复");
@@ -737,19 +734,28 @@ export default function App() {
                   日期使用此设备本地时间。
                 </p>
               </section>
-              <section className="panel settings roadmap">
-                <h2>小世界成长计划</h2>
+              <section className="panel settings">
+                <h2>日记提醒</h2>
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={data.journalReminderEnabled !== false}
+                    onChange={(e) =>
+                      commit((d) => ({
+                        ...d,
+                        journalReminderEnabled: e.target.checked,
+                      }))
+                    }
+                  />
+                  22:00 小光晚安邀请
+                </label>
                 <p>
-                  <b>01 正在这里</b>　像素小屋、任务与 Top 3、本地保存
+                  仅在应用打开时提醒写日记；日程的后台通知可在下方单独设置。
                 </p>
-                <p>02　账户登录、安全的云同步</p>
-                <p>03　月历、一句话识别日程、独立随心记</p>
-                <p>04　日记与小光互动、提前15分钟后台提醒</p>
-                <p>05　账户与跨设备同步、Google 日历同步</p>
               </section>
             </>
           )}
-          <div hidden={page !== "today" && page !== "profile"}>
+          <div hidden={page !== "profile"}>
             <PushSettings data={data} />
           </div>
         </div>
